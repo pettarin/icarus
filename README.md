@@ -63,7 +63,7 @@ To export to EPUB 3, you will also need to:
 
 ## Usage
 
-Please read the [tutorial](tutorial/index.md) for detailed information about using **icarus**,
+Please read the [tutorial](tutorial/) for detailed information about using **icarus**,
 including conventions and limitations.
 
 Although the changes done by this plugin to the code of your eBook can be reverted,
