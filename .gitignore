@@ -1,0 +1,14 @@
+*.pyc
+*.pyd
+*.pyo
+*.swp
+bak
+build
+dist
+docs/build
+tmp
+
+# service scripts
+zzz_*.py
+zzz_*.sh
+
