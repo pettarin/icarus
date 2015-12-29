@@ -27,7 +27,7 @@ from moedit import MOEdit
 __author__ = "Alberto Pettarin"
 __copyright__ = "Copyright 2015, Alberto Pettarin (www.albertopettarin.it)"
 __license__ = "MIT"
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 __email__ = "alberto@albertopettarin.it"
 __status__ = "Production"
 
@@ -43,6 +43,7 @@ class MainGUI(tkinter.Frame):
     DEFAULT_ID_REGEX = r"f[0-9]{6}"
     DEFAULT_MO_CLASS = "mo"
     DEFAULT_NOMO_CLASS = "nomo"
+    DEFAULT_EXISTING_IDS_ONLY = 0
     DEFAULT_SAVE_DIRECTORY = os.path.expanduser("~")
     DEFAULT_TAGS = ["h1", "h2", "h3", "h4", "h5", "h6", "li", "p", "q"]
 
@@ -55,6 +56,7 @@ class MainGUI(tkinter.Frame):
         "id_regex",
         "mo_class",
         "nomo_class",
+        "existing_ids_only",
         "save_directory",
         "tags",
         "window_geometry"
@@ -164,6 +166,7 @@ class MainGUI(tkinter.Frame):
         self.prefs["nomo_class"] = self.nomo_class_var.get().strip()
         self.prefs["id_regex"] = self.id_regex_var.get().strip()
         self.prefs["id_format"] = self.id_format_var.get().strip()
+        self.prefs["existing_ids_only"] = self.existing_ids_only.get()
         self.prefs["save_directory"] = self.save_directory_var.get().strip()
         # save preferences
         self.bk.savePrefs(self.prefs)
@@ -186,6 +189,7 @@ class MainGUI(tkinter.Frame):
         self.prefs["nomo_class"] = self.DEFAULT_NOMO_CLASS
         self.prefs["id_regex"] = self.DEFAULT_ID_REGEX
         self.prefs["id_format"] = self.DEFAULT_ID_FORMAT
+        self.prefs["existing_ids_only"] = self.DEFAULT_EXISTING_IDS_ONLY
         self.prefs["save_directory"] = self.DEFAULT_SAVE_DIRECTORY
 
     def initialize_ui(self):
@@ -243,12 +247,18 @@ class MainGUI(tkinter.Frame):
 
         frame6 = tkinter.Frame(frameAddRemove)
         frame6.pack(side=tkinter_constants.TOP, fill=tkinter_constants.BOTH)
-        
-        self.remove_mo_class_button = tkinter.Button(frame6, text="Remove MO class only", command=self.cmd_remove_mo_class)
+        self.existing_ids_only = tkinter.IntVar()
+        self.existing_ids_only.set(self.prefs["existing_ids_only"])
+        existing_ids_only_checkbox = tkinter.Checkbutton(frame6, text="Add MO class only to tags with existing MO ID attribute", variable=self.existing_ids_only)
+        existing_ids_only_checkbox.pack(side=tkinter_constants.LEFT, fill=tkinter_constants.BOTH)
+
+        frame7 = tkinter.Frame(frameAddRemove)
+        frame7.pack(side=tkinter_constants.TOP, fill=tkinter_constants.BOTH)
+        self.remove_mo_class_button = tkinter.Button(frame7, text="Remove MO class only", command=self.cmd_remove_mo_class)
         self.remove_mo_class_button.pack(side=tkinter_constants.LEFT, fill=tkinter_constants.X, expand=1)
-        self.remove_button = tkinter.Button(frame6, text="Remove MO class and id", command=self.cmd_remove)
+        self.remove_button = tkinter.Button(frame7, text="Remove MO class and id", command=self.cmd_remove)
         self.remove_button.pack(side=tkinter_constants.LEFT, fill=tkinter_constants.X, expand=1)
-        self.add_button = tkinter.Button(frame6, text="Add MO class and id", command=self.cmd_add)
+        self.add_button = tkinter.Button(frame7, text="Add MO class and id", command=self.cmd_add)
         self.add_button.pack(side=tkinter_constants.LEFT, fill=tkinter_constants.X, expand=1)
         
         frameGenerate = tkinter.LabelFrame(body, bd=2, padx=10, pady=10, relief=tkinter_constants.GROOVE, text="Step 2: export aeneas job ZIP file")
@@ -300,6 +310,7 @@ class MainGUI(tkinter.Frame):
         self.nomo_class_var.set(self.prefs["nomo_class"])
         self.id_regex_var.set(self.prefs["id_regex"])
         self.id_format_var.set(self.prefs["id_format"])
+        self.existing_ids_only.set(self.prefs["existing_ids_only"])
         self.save_directory_var.set(self.prefs["save_directory"])
         self.save()
 
@@ -414,7 +425,8 @@ class MainGUI(tkinter.Frame):
                         mo_class=self.prefs["mo_class"],
                         nomo_class=self.prefs["nomo_class"],
                         id_regex=self.prefs["id_regex"],
-                        id_format=self.prefs["id_format"]
+                        id_format=self.prefs["id_format"],
+                        existing_ids_only=self.prefs["existing_ids_only"]
                     )
                     
                     if operation == self.OPERATION_ADD:

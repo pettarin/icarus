@@ -10,7 +10,7 @@ import re
 __author__ = "Alberto Pettarin"
 __copyright__ = "Copyright 2015, Alberto Pettarin (www.albertopettarin.it)"
 __license__ = "MIT"
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 __email__ = "alberto@albertopettarin.it"
 __status__ = "Production"
 
@@ -28,14 +28,25 @@ class MOEdit():
     :type  id_regex: str
     :param id_format: the format string (with a "%d" placeholder) to generate id values
     :type  id_format: str
+    :param existing_ids_only: if 1 (True), add MO class only to tags with (pre-existing) MO ID
+    :type  existing_ids_only: int
     """
 
-    def __init__(self, tags, mo_class, nomo_class, id_regex, id_format):
+    def __init__(
+            self,
+            tags,
+            mo_class,
+            nomo_class,
+            id_regex,
+            id_format,
+            existing_ids_only
+    ):
         self.tags = tags
         self.mo_class = mo_class
         self.nomo_class = nomo_class
         self.id_regex = id_regex
         self.id_format = id_format
+        self.existing_ids_only = (existing_ids_only == 1)
         self.id_pattern = re.compile(self.id_regex)
 
     @classmethod
@@ -155,12 +166,20 @@ class MOEdit():
                 if self.has_nomo_class(node):
                     msgs.append(("WARN", "element '%s' with class 'nomo' => ignoring (it would be '%s')" % (node.name, new_id)))
                 else:
-                    if self.has_id_not_mo(node):
+                    add = True
+                    if self.existing_ids_only:
+                        if self.has_mo_id(node):
+                            msgs.append(("INFO", "element '%s' with MO id '%s' => adding class '%s'" % (node.name, node.attrs["id"], self.mo_class)))
+                        else:
+                            msgs.append(("WARN", "element '%s' without MO id => not adding class '%s'" % (node.name, self.mo_class)))
+                            add = False
+                    elif self.has_id_not_mo(node):
                         msgs.append(("WARN", "element '%s' with id '%s' => not changing (it would be '%s')" % (node.name, node.attrs["id"], new_id)))
                     else:
                         msgs.append(("INFO", "element '%s' => setting id '%s'" % (node.name, new_id)))
                         node.attrs["id"] = new_id
-                    self.add_mo_class(node)
+                    if add:
+                        self.add_mo_class(node)
         out_data = self.output_xhtml_code(soup)
         return (msgs, out_data)
 
@@ -188,7 +207,9 @@ class MOEdit():
                         self.remove_mo_class(node)
                         msgs.append(("INFO", "removed class 'mo' from element '%s'" % (node.name)))
                     if remove_id:
-                        if self.has_mo_id(node):
+                        if (self.existing_ids_only) and (self.has_mo_id(node)):
+                            msgs.append(("WARN", "element '%s' with MO id '%s' => not removing" % (node.name, node.attrs["id"])))
+                        elif self.has_mo_id(node):
                             old_id = node.attrs["id"]
                             self.remove_id_attribute(node)
                             msgs.append(("INFO", "removed id '%s' from element '%s'" % (old_id, node.name)))

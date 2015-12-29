@@ -6,6 +6,6 @@
 <description>icarus is a Sigil plugin to create EPUB 3 Audio-eBooks</description>
 <engine>python3.4</engine>
 <engine>python2.7</engine>
-<version>0.0.1</version>
+<version>0.0.2</version>
 <oslist>osx,win,unx</oslist>
 </plugin>

@@ -2,8 +2,8 @@
 
 **icarus** is a Sigil plugin to create EPUB 3 Audio-eBooks
 
-* Version: 0.0.1
-* Date: 2015-12-16
+* Version: 0.0.2
+* Date: 2015-12-29
 * Developer: [Alberto Pettarin](http://www.albertopettarin.it/)
 * License: the MIT License (MIT)
 * Contact: [click here](http://www.albertopettarin.it/contact.html)
@@ -51,13 +51,13 @@ this plugin might be retired or re-purposed.
 
 ## Installation
 
-1. Download the **icarus** Sigil plugin from [MobileRead](http://www.mobileread.com/forums/showthread.php?t=268702) or from [source](https://github.com/pettarin/icarus/)
+1. Download the **icarus** Sigil plugin from [MobileRead](http://www.mobileread.com/forums/showthread.php?t=268702) or from the [plugin](plugin/) directory
 1. Open Sigil
 1. Add the **icarus** plugin (Plugins > Manage Plugins > Add Plugin > select the downloaded ZIP file)
 
 To export to EPUB 3, you will also need to:
 
-1. Download the **ePub3-itizer** Sigil plugin, v0.3.4 or later, from [MobileRead](http://www.mobileread.com/forums/showthread.php?t=250566) or from [source](https://github.com/kevinhendricks/ePub3-itizer)
+1. Download the **ePub3-itizer** Sigil plugin, v0.3.4 or later, from [MobileRead](http://www.mobileread.com/forums/showthread.php?t=250566) or from [source](https://github.com/kevinhendricks/ePub3-itizer/tree/master/plugin)
 1. Add it to Sigil as above (Plugins > Manage Plugins > Add Plugin > select the downloaded ZIP file)
 
 
@@ -83,6 +83,7 @@ Although the changes done by this plugin to the code of your eBook can be revert
 * Handle pre-existing `class` attributes.
 * The user can specify the list of tags to be processed.
 * The user can specify a "no MO" `class` attribute (with user-selectable value, default `nomo`) to avoid processing a specific element.
+* The user can specify that the MO `class` should be added only to tags having a pre-existing MO `id` attribute.
 * The (text, audio) file pairs can be detected automatically by matching their file names.
 * The user can modify the list of (text, audio) files before exporting the aeneas job ZIP file.
 * The exported aeneas job ZIP file can be immediately processed by [aeneas](http://www.readbeyond.it/aeneas/) or [aeneasweb.org](http://aeneasweb.org/).
@@ -98,6 +99,12 @@ Although the changes done by this plugin to the code of your eBook can be revert
 * No way of specifying special aeneas parameters.
 * No way of specifying the media narrator metadatum.
 * The media active and media playback active classes must be manually added to the book CSS file by the user.
+
+
+## Change log
+
+* 0.0.2 2015-12-29 Added option for adding MO class only to elements with pre-existing MO id attribute
+* 0.0.1 2015-12-16 Initial release
 
 
 ## License
