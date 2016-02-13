@@ -2,8 +2,8 @@
 
 **icarus** is a Sigil plugin to create EPUB 3 Audio-eBooks
 
-* Version: 0.0.2
-* Date: 2015-12-29
+* Version: 0.0.3
+* Date: 2016-02-12
 * Developer: [Alberto Pettarin](http://www.albertopettarin.it/)
 * License: the MIT License (MIT)
 * Contact: [click here](http://www.albertopettarin.it/contact.html)
@@ -34,14 +34,14 @@ Specifically, **icarus** provides the following three functions (which can be us
 
 The final EPUB 3 Audio-eBook file can be then exported using the
 [ePub3-itizer Sigil plugin](http://www.mobileread.com/forums/showthread.php?t=250566),
-v0.3.4 or later.
+v0.3.6 or later.
 
 The main goal of **icarus** consists in providing regular users
 with the opportunity of creating EPUB 3 Audio-eBooks with Sigil,
 leveraging [aeneas](http://www.readbeyond.it/aeneas/)
 for the actual computation of timing values in the SMIL files.
 
-Currently [Sigil](http://sigil-ebook.com/) does not have native support for EPUB 3,
+Currently [Sigil](http://sigil-ebook.com/) does not have full native support for EPUB 3,
 but it is actively transitioning from EPUB 2 to EPUB 3,
 and its plugin mechanism allows the user to export EPUB 3 files,
 including support for EPUB 3 Media Overlays.
@@ -57,8 +57,25 @@ this plugin might be retired or re-purposed.
 
 To export to EPUB 3, you will also need to:
 
-1. Download the **ePub3-itizer** Sigil plugin, v0.3.4 or later, from [MobileRead](http://www.mobileread.com/forums/showthread.php?t=250566) or from [source](https://github.com/kevinhendricks/ePub3-itizer/tree/master/plugin)
+1. Download the **ePub3-itizer** Sigil plugin, v0.3.6 or later, from [MobileRead](http://www.mobileread.com/forums/showthread.php?t=250566) or from [source](https://github.com/kevinhendricks/ePub3-itizer/tree/master/plugin)
 1. Add it to Sigil as above (Plugins > Manage Plugins > Add Plugin > select the downloaded ZIP file)
+
+
+## Compatibility Chart
+
+As mentioned above, the **icarus** plugin should be considered
+a temporary workaround until Sigil implements full Media Overlays native support.
+
+Moreover, the current **Sigil 0.9.x** series is undergoing a number
+of deep code/feature changes, and any new version might break this plugin.
+The same applies to the **ePub3-itizer** plugin.
+
+Please be sure you are running one of the following supported combinations:
+
+| Sigil                 | icarus   | ePub3-itizer          |
+|-----------------------|----------|-----------------------|
+| >= 0.9.0 and <= 0.9.2 | <= 0.0.2 | >= 0.3.4 and <= 0.3.5 |
+| == 0.9.3              | >= 0.0.3 | == 0.3.6              |
 
 
 ## Usage
@@ -103,8 +120,11 @@ Although the changes done by this plugin to the code of your eBook can be revert
 
 ## Change log
 
+* 0.0.3 2016-02-12 Update to make the plugin work in Sigil v0.9.3
 * 0.0.2 2015-12-29 Added option for adding MO class only to elements with pre-existing MO id attribute
 * 0.0.1 2015-12-16 Initial release
+
+(You can download previous versions of the plugin from the [plugin/](plugin/) directory.
 
 
 ## License

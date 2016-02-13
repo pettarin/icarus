@@ -25,9 +25,9 @@ else:
 from moedit import MOEdit
 
 __author__ = "Alberto Pettarin"
-__copyright__ = "Copyright 2015, Alberto Pettarin (www.albertopettarin.it)"
+__copyright__ = "Copyright 2015-2016, Alberto Pettarin (www.albertopettarin.it)"
 __license__ = "MIT"
-__version__ = "0.0.2"
+__version__ = "0.0.3"
 __email__ = "alberto@albertopettarin.it"
 __status__ = "Production"
 
@@ -616,6 +616,10 @@ class MainGUI(tkinter.Frame):
                     smil_mid = "smil.%s" % basename
                     data = zip_obj.read(name)
                     self.bk.addfile(smil_mid, basename, data, mime="application/smil+xml", properties=None)
+                    # TODO workaround to strip xml declaration => not working
+                    #data = self.bk.readfile(smil_mid)
+                    #data = data.replace('<?xml version="1.0" encoding="utf-8" ?>\n', "")
+                    #self.bk.writefile(smil_mid, data.encode("utf-8"))
                     print("INFO: file '%s' added" % (basename))
                     extracted = True
             else:

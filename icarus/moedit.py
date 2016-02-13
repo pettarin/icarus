@@ -8,9 +8,9 @@ import sys
 import re
 
 __author__ = "Alberto Pettarin"
-__copyright__ = "Copyright 2015, Alberto Pettarin (www.albertopettarin.it)"
+__copyright__ = "Copyright 2015-2016, Alberto Pettarin (www.albertopettarin.it)"
 __license__ = "MIT"
-__version__ = "0.0.2"
+__version__ = "0.0.3"
 __email__ = "alberto@albertopettarin.it"
 __status__ = "Production"
 
@@ -215,7 +215,7 @@ class MOEdit():
                             msgs.append(("INFO", "removed id '%s' from element '%s'" % (old_id, node.name)))
                         elif self.has_id_not_mo(node):
                             msgs.append(("WARN", "element '%s' with id '%s' => not removing" % (node.name, node.attrs["id"])))
-        out_data = self.output_xhtml_code(soup)
+        out_data = self.output_xhtml_code(soup) 
         return (msgs, out_data)
 
     @classmethod
@@ -228,6 +228,7 @@ class MOEdit():
         :type  soup: gumbo_bs4 soup
         :rtype: str
         """
+        out_data = soup.serialize_xhtml()
         self_closing_tags = [
             #"area",
             #"base",
@@ -246,19 +247,23 @@ class MOEdit():
             "track",
             #"wbr",
         ]
-
-        out_data = soup.serialize_xhtml()
         #out_data = soup.prettyprint_xhtml(
         #    indent_level=0,
         #    eventual_encoding="utf-8",
         #    formatter="minimal",
         #    indent_chars="  "
         #)
-
         # this is a workaround for Sigil < 0.9.2
         # see https://github.com/Sigil-Ebook/Sigil/issues/169
         for tag in self_closing_tags:
             out_data = out_data.replace("></%s>" % (tag), "/>")
+
+        # this is a workaround for Sigil >= 0.9.3
+        bad = """<!DOCTYPE html PUBLIC ""
+ "">"""
+        good = "<!DOCTYPE html>"
+        out_data = out_data.replace(bad, good)
+
         return out_data
 
 
