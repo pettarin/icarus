@@ -75,7 +75,10 @@ Please be sure you are running one of the following supported combinations:
 | Sigil                 | icarus   | ePub3-itizer          |
 |-----------------------|----------|-----------------------|
 | >= 0.9.0 and <= 0.9.2 | <= 0.0.2 | >= 0.3.4 and <= 0.3.5 |
-| == 0.9.3              | >= 0.0.3 | == 0.3.6              |
+| >= 0.9.3 and          | >= 0.0.3 | == 0.3.6              |
+
+As of 2016-12-08, **icarus 0.0.3** has been tested working correctly
+with **Sigil 0.9.7** and **ePub3-itizer 0.3.6**.
 
 
 ## Usage
@@ -120,7 +123,7 @@ Although the changes done by this plugin to the code of your eBook can be revert
 
 ## Change log
 
-* 0.0.3 2016-02-12 Update to make the plugin work in Sigil v0.9.3
+* 0.0.3 2016-02-12 Update to make the plugin work in Sigil v0.9.3 and later
 * 0.0.2 2015-12-29 Added option for adding MO class only to elements with pre-existing MO id attribute
 * 0.0.1 2015-12-16 Initial release
 
